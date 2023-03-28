@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Time from './Time';
 
@@ -7,22 +7,27 @@ function Task() {
   const [taskInput, setTaskInput] = useState('');
   const project = localStorage.getItem('projects');
 
-  const report = JSON.parse(localStorage.getItem('tasks'));
-
   const handleTaskInput = (event) => {
     setTaskInput(event.target.value);
   };
+
+  const task = JSON.parse(localStorage.getItem('task'));
 
   const handleSubmit = (event) => {
     event.preventDefault();
     if (taskInput.trim() !== '') {
       setTasks([...tasks, taskInput]);
       setTaskInput('');
+      const existingTasks = JSON.parse(localStorage.getItem('task') || '[]');
+      console.log('on handle existing task', existingTasks);
+      existingTasks.push(taskInput);
+      localStorage.setItem('task', JSON.stringify(existingTasks));
     }
   };
 
   const resetHandle = () => {
     localStorage.removeItem('tasks');
+    localStorage.removeItem('task');
     setTasks([]);
   };
 
@@ -55,8 +60,8 @@ function Task() {
         <button type='submit'>Add Task</button>
       </form>
       <ul>
-        {tasks?.map((task, index) => (
-          <div>
+        {task?.map((task, index) => (
+          <div key={index}>
             <Time task={task} key={index} />
           </div>
         ))}

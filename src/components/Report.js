@@ -8,7 +8,7 @@ const Report = () => {
   if (report === null) {
     return (
       <div>
-        <h1>There is no task here</h1>
+        <h1>You didn't finish your task yet.</h1>
       </div>
     );
   }

@@ -20,16 +20,17 @@ const Time = ({ task }) => {
     const calculateTimeDifference = () => {
       if (startTime && stopTime) {
         const difference = stopTime.getTime() - startTime.getTime();
-        // console.log(difference);
-
         const taskData = {
           name: task,
           time: difference / 3600000,
         };
-        const existingTasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+        const existingTasksData = JSON.parse(
+          localStorage.getItem('tasks') || '[]'
+        );
+
         localStorage.setItem(
           'tasks',
-          JSON.stringify([...existingTasks, taskData])
+          JSON.stringify([...existingTasksData, taskData])
         );
 
         setTimeTaken(difference / 1000);
@@ -47,9 +48,8 @@ const Time = ({ task }) => {
         Start
       </button>
       <button onClick={handleStop}>Stop</button>
-      <p>
-        <p>Time elapsed: {timeTake?.toFixed(3)} seconds</p>
-      </p>
+
+      <p>Time elapsed: {timeTake?.toFixed(3)} seconds</p>
     </div>
   );
 };
