@@ -4,7 +4,14 @@ const Report = () => {
   const project = localStorage.getItem('projects');
 
   const report = JSON.parse(localStorage.getItem('tasks'));
-  console.log(report);
+
+  if (report === null) {
+    return (
+      <div>
+        <h1>There is no task here</h1>
+      </div>
+    );
+  }
 
   let totalTime = 0;
   for (let i = 0; i < report.length; i++) {
